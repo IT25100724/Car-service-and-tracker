@@ -4,15 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
 
-/**
- * FEEDBACK ENTITY — MODULE 6: REVIEW MANAGEMENT
- * ===============================================
- * Represents a customer's review for a completed service.
- * Maps to the "feedback" table.
- *
- * OOP Concept: ENCAPSULATION
- * All properties are private and accessed via Lombok-generated getters/setters.
- */
+//Entity class representing customer feedback for a completed car service.
+// Stores ratings, comments, and related booking/customer details.
+
 @Entity
 @Table(name = "feedback")
 @Data
@@ -26,27 +20,29 @@ public class Feedback {
     @Column(name = "id")
     private Long id;
 
-    /** Which booking is this review for? */
+    //ID of the related service booking
     @Column(name = "booking_id", nullable = false)
     private Long bookingId;
 
-    /** Who wrote the review? */
+    //ID of the customer who submitted the feedback
     @Column(name = "customer_id", nullable = false)
     private Long customerId;
 
-    /** Star rating out of 5 */
+    //Customer rating value(1 to 5)
     @Column(name = "rating", nullable = false)
     private Integer rating;
 
-    /** Written review comment */
+    //Additional review comment provided by the customer
     @Column(name = "comment", columnDefinition = "TEXT")
     private String comment;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
+    //Automatically sets the creation time before inserting the record.
     @PrePersist
     protected void onCreate() {
+
         createdAt = LocalDateTime.now();
     }
 }
