@@ -3,15 +3,7 @@ package com.example.car_service.servicecatalog;
 import jakarta.persistence.*;
 import lombok.*;
 
-/**
- * SERVICE CATALOG ENTITY — MODULE 4: SERVICE CATEGORY MANAGEMENT
- * ===============================================================
- * Represents a type of service the garage offers (e.g., Oil Change, Brake Repair).
- * Maps to the "service_catalog" table.
- *
- * OOP Concept: DATA ABSTRACTION
- * Only the essential details of a service are exposed here.
- */
+// Represents a service offered by the garage
 @Entity
 @Table(name = "service_catalog")
 @Data
@@ -20,33 +12,33 @@ import lombok.*;
 @Builder
 public class ServiceCatalog {
 
-    /** Primary key */
+    // Primary key
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    /** Name of the service (e.g., "Full Wash") */
+    // Service name
     @Column(name = "service_name", nullable = false)
     private String serviceName;
 
-    /** Description of what the service includes */
+    // Service description
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    /** Cost of the service */
+    // Service price
     @Column(name = "price", nullable = false)
     private Double price;
 
-    /** Estimated time it takes */
+    // Estimated duration in minutes
     @Column(name = "duration_minutes")
     private Integer durationMinutes;
 
-    /** Category grouping (e.g., "Maintenance", "Cleaning") */
+    // Service category
     @Column(name = "category", length = 50)
     private String category;
 
-    /** Is this service currently offered? */
+    // Availability status
     @Column(name = "active")
     @Builder.Default
     private boolean active = true;
