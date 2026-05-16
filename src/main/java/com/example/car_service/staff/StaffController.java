@@ -7,11 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * STAFF CONTROLLER
- * =================
- * REST API endpoints for Staff Management.
- */
+
+
 @RestController
 @RequestMapping("/api/staff")
 @RequiredArgsConstructor

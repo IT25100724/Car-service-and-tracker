@@ -1,3 +1,4 @@
+
 package com.example.car_service.staff;
 
 import com.example.car_service.exception.DuplicateResourceException;
@@ -7,11 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * STAFF SERVICE IMPLEMENTATION
- * =============================
- * Handles business rules for employees.
- */
+
 @Service
 @RequiredArgsConstructor
 public class StaffServiceImpl implements StaffService {

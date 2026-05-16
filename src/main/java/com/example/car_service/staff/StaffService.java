@@ -1,12 +1,9 @@
+
 package com.example.car_service.staff;
 
 import java.util.List;
 
-/**
- * STAFF SERVICE INTERFACE
- * ========================
- * Contract for managing employees.
- */
+
 public interface StaffService {
     Staff addStaff(Staff staff);
     Staff getStaffById(Long id);
