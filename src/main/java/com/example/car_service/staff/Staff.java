@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 /**
  * STAFF ENTITY — MODULE 3: STAFF MANAGEMENT
- * ==========================================
+ 
  * Represents an employee working at the car service center.
  * Maps to the "staff" table in the database.
  */
