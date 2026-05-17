@@ -15,6 +15,7 @@ public class StaffServiceImpl implements StaffService {
 
     private final StaffRepository staffRepository;
 
+
     @Override
     public Staff addStaff(Staff staff) {
         if (staffRepository.existsByEmail(staff.getEmail())) {
@@ -29,10 +30,13 @@ public class StaffServiceImpl implements StaffService {
                 .orElseThrow(() -> new ResourceNotFoundException("Staff not found with id: " + id));
     }
 
+
+
     @Override
     public List<Staff> getAllStaff() {
         return staffRepository.findAll();
     }
+
 
     @Override
     public List<Staff> getActiveStaff() {
@@ -43,6 +47,11 @@ public class StaffServiceImpl implements StaffService {
     public List<Staff> getStaffByRole(StaffRole role) {
         return staffRepository.findByRole(role);
     }
+
+
+
+
+
 
     @Override
     public Staff updateStaff(Long id, Staff staff) {
@@ -57,6 +66,9 @@ public class StaffServiceImpl implements StaffService {
         existing.setActive(staff.isActive());
         return staffRepository.save(existing);
     }
+
+
+    
 
     @Override
     public void deleteStaff(Long id) {
