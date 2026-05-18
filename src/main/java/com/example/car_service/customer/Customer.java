@@ -11,9 +11,10 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-// Inheritance with BaseEntity class
+// Inheritance
 public class Customer extends BaseEntity {
 
+    // Encapsulation :- private field, access controlled by getter/setter
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
