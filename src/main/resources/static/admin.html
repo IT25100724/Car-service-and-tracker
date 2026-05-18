@@ -1,8 +1,8 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Admin Dashboard - CarService Tracker</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https:
+<link rel="stylesheet" href="https:
 <style>
 :root{--bg:#0a1321;--sb:#0f172a;--card:#1e2937;--inp:#1a2535;--teal:#14b8a6;--tdim:rgba(20,184,166,.10);--blue:#2563eb;--green:#34d399;--red:#f87171;--amb:#fbbf24;--pur:#a78bfa;--tx:#e2e8f0;--tx2:#94a3b8;--mu:#475569;--bdr:rgba(255,255,255,.08);--r:14px;--rs:10px;--tr:.2s ease}
 *{margin:0;padding:0;box-sizing:border-box}body{font-family:Inter,sans-serif;background:var(--bg);color:var(--tx);display:flex;min-height:100vh}
@@ -149,7 +149,6 @@ tr:hover td{background:rgba(255,255,255,.02)}
   </header>
   <div class="content">
 
-    <!-- DASHBOARD TAB -->
     <div id="tab-dashboard" class="tab-panel active">
       <div class="page-hdr"><div><h1>Admin Dashboard</h1><p>Welcome back, Admin! Here is your overview.</p></div><button class="btn btn-primary" onclick="loadAll()"><i class="fas fa-rotate"></i> Refresh</button></div>
       <div class="stats-grid" id="stats-grid">
@@ -167,24 +166,20 @@ tr:hover td{background:rgba(255,255,255,.02)}
       </div>
     </div>
 
-    <!-- CUSTOMERS TAB -->
     <div id="tab-customers" class="tab-panel">
       <div class="page-hdr"><div><h1>Customer Management</h1><p>Manage all registered customers</p></div><button class="btn btn-primary" onclick="openModal('customer')"><i class="fas fa-plus"></i> Add Customer</button></div>
       <div class="table-wrap"><div class="table-hdr"><span class="table-title" id="c-count">Customers</span><button class="btn btn-outline" onclick="loadCustomers()"><i class="fas fa-rotate"></i></button></div>
       <div id="customers-table"><div class="loading">Loading...</div></div></div>
     </div>
 
-    <!-- VEHICLES TAB -->
-    <div id="tab-vehicles" class="tab-panel">
-      <div class="page-hdr"><div><h1>Vehicle Management</h1><p>Manage registered vehicles</p></div><button class="btn btn-primary" onclick="openModal('vehicle')"><i class="fas fa-plus"></i> Add Vehicle</button></div>
+    
+    < <div class="page-hdr"><div><h1>Vehicle Management</h1><p>Manage registered vehicles</p></div><button class="btn btn-primary" onclick="openModal('vehicle')"><i class="fas fa-plus"></i> Add Vehicle</button></div>
       <div class="table-wrap"><div class="table-hdr"><span class="table-title" id="v-count">Vehicles</span><button class="btn btn-outline" onclick="loadVehicles()"><i class="fas fa-rotate"></i></button></div>
       <div id="vehicles-table"><div class="loading">Loading...</div></div></div>
     </div>
 
-        <!-- SERVICES TAB -->
-    <div id="tab-services" class="tab-panel">
-      <div class="page-hdr">
-        <div><h1>Service Catalog</h1><p>Manage available car services</p></div>
+        <div id="tab-services" class="tab-panel">
+      <di   <div><h1>Service Catalog</h1><p>Manage available car services</p></div>
         <div style="display:flex;gap:10px">
           <div class="tab-bar" style="margin-bottom:0">
             <button class="tab active" id="btn-svc-table" onclick="toggleSvcView('table')"><i class="fas fa-list"></i> Table</button>
@@ -219,32 +214,26 @@ tr:hover td{background:rgba(255,255,255,.02)}
       <div id="bookings-table"><div class="loading">Loading...</div></div></div>
     </div>
 
-    <!-- STAFF TAB -->
-    <div id="tab-staff" class="tab-panel">
-      <div class="page-hdr"><div><h1>Staff Management</h1><p>Manage your team members</p></div><button class="btn btn-primary" onclick="openModal('staff')"><i class="fas fa-plus"></i> Add Staff</button></div>
-      <div class="table-wrap"><div class="table-hdr"><span class="table-title" id="st-count">Staff Members</span><button class="btn btn-outline" onclick="loadStaff()"><i class="fas fa-rotate"></i></button></div>
+    
+    < <div class="page-hdr"><div><h1>Staff Management</h1><p>Manage your team members</p></div><button class="btn btn-primary" onclick="openModal('staff')"><i class="fas fa-plus"></i> Add Staff</button></div>
       <div id="staff-table"><div class="loading">Loading...</div></div></div>
     </div>
 
-    <!-- FEEDBACK TAB -->
-    <div id="tab-feedback" class="tab-panel">
-      <div class="page-hdr"><div><h1>Feedback & Reviews</h1><p>Customer ratings and feedback</p></div></div>
-      <div class="table-wrap"><div class="table-hdr"><span class="table-title" id="f-count">Feedback</span><button class="btn btn-outline" onclick="loadFeedback()"><i class="fas fa-rotate"></i></button></div>
+    
+    < <div class="page-hdr"><div><h1>Feedback & Reviews</h1><p>Customer ratings and feedback</p></div></div>
       <div id="feedback-table"><div class="loading">Loading...</div></div></div>
     </div>
 
-    <!-- HISTORY TAB -->
+    
     <div id="tab-history" class="tab-panel">
-      <div class="page-hdr"><div><h1>Service History</h1><p>Completed service records</p></div></div>
       <div class="table-wrap"><div class="table-hdr"><span class="table-title">Completed Services</span><button class="btn btn-outline" onclick="loadHistory()"><i class="fas fa-rotate"></i></button></div>
-      <div id="history-table"><div class="loading">Loading...</div></div></div>
-    </div>
+     /div>
   </div>
 </div>
 
-<!-- MODAL -->
+
 <div class="overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
+modal">
     <div class="modal-hdr"><span class="modal-title" id="modal-title">Add Record</span><button class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></button></div>
     <div id="modal-body"></div>
     <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal()">Cancel</button><button class="btn btn-primary" id="save-btn" onclick="saveRecord()"><i class="fas fa-check"></i> Save</button></div>
@@ -305,7 +294,6 @@ function toast(msg, type='success') {
 }
 
 async function loadStats() {
-  // If the stats endpoint exists, use it. Otherwise, construct manually.
   try {
     const d = await fetch(API+'/api/admin/dashboard/stats');
     if(d.ok) {
@@ -315,7 +303,6 @@ async function loadStats() {
       throw new Error('Stats not found');
     }
   } catch(e) {
-    // Construct stats from other endpoints
     const [c,v,b,s,f] = await Promise.all([
       api('GET','/api/customers'), api('GET','/api/vehicles'),
       api('GET','/api/bookings'), api('GET','/api/staff'),
@@ -661,7 +648,6 @@ async function saveRecord() {
   if(!path) return;
   method = editId ? 'PUT' : 'POST';
   
-  // Custom edit logic for specific APIs if they differ
   if(editId) {
     path += '/' + editId;
   }
@@ -687,22 +673,19 @@ function filterCurrentTab(query) {
   const activePanel = document.querySelector('.tab-panel.active');
   if (!activePanel) return;
 
-  // Filter table rows
+  
   const rows = activePanel.querySelectorAll('tbody tr:not(.empty-row)');
   rows.forEach(row => {
     const text = row.innerText.toLowerCase();
     row.style.display = text.includes(q) ? '' : 'none';
   });
 
-  // Filter service cards
   const cards = activePanel.querySelectorAll('.svc-card-admin');
   cards.forEach(card => {
     const text = card.innerText.toLowerCase();
     card.style.display = text.includes(q) ? '' : 'none';
   });
-  
-  // Handle empty state if all filtered out
-  const table = activePanel.querySelector('table');
+  table');
   if (table) {
     const visibleRows = activePanel.querySelectorAll('tbody tr:not(.empty-row):not([style*="display: none"])');
     let emptyRow = activePanel.querySelector('.search-empty-row');
