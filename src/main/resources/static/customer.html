@@ -1,8 +1,8 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Customer Dashboard - CarService Tracker</title>
-<link href="https:
-<link rel="stylesheet" href="https:
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 :root{--bg:#0a1321;--sb:#0f172a;--card:#1e2937;--inp:#1a2535;--teal:#14b8a6;--tdim:rgba(20,184,166,.10);--blue:#2563eb;--green:#34d399;--red:#f87171;--amb:#fbbf24;--pur:#a78bfa;--tx:#e2e8f0;--tx2:#94a3b8;--mu:#475569;--bdr:rgba(255,255,255,.08);--r:14px;--rs:10px;--tr:.2s ease}
 *{margin:0;padding:0;box-sizing:border-box}body{font-family:Inter,sans-serif;background:var(--bg);color:var(--tx);display:flex;min-height:100vh}
@@ -349,7 +349,7 @@ async function loadDashboard() {
        ${recent.map(b=>`<tr><td>#${b.id}</td><td>#${b.vehicleId}</td><td>${b.bookingDate?b.bookingDate.slice(0,10):'-'}</td><td>Rs.${(b.totalAmount||0).toLocaleString()}</td><td><span class="badge ${statusBadge(b.status)}">${b.status||'-'}</span></td><td><span class="badge ${payBadge(b.paymentStatus)}">${b.paymentStatus||'-'}</span></td></tr>`).join('')}</tbody></table>`
     : `<div class="empty-msg"><i class="fas fa-calendar"></i>No bookings yet. <a href="new-booking.html" style="color:var(--teal)">Book now!</a></div>`;
     
-  
+  // Also load initials and name
   const un = sessionStorage.getItem('username') || 'Customer';
   const inits = un.substring(0,2).toUpperCase();
   document.querySelector('.sb-avatar').textContent = inits;
@@ -464,15 +464,16 @@ function filterCurrentTab(query) {
   const activePanel = document.querySelector('.tab-panel.active');
   if (!activePanel) return;
 
-  
+  // Filter table rows
   const rows = activePanel.querySelectorAll('tbody tr:not(.empty-row)');
   rows.forEach(row => {
     const text = row.innerText.toLowerCase();
     row.style.display = text.includes(q) ? '' : 'none';
   });
 
-  const cards = activePanel.querySelectorAll('.svc-card2:not([onclick*="scViewDetails"])');
-  const catalogCards = activePanel.querySelectorAll('.svc-card2[onclick*="scViewDetails"]');
+  // Filter service cards (Service Catalog)
+  const cards = activePanel.querySelectorAll('.svc-card2:not([onclick*="scViewDetails"])'); // Cards in booking step
+  const catalogCards = activePanel.querySelectorAll('.svc-card2[onclick*="scViewDetails"]'); // Cards in catalog
   const vehicleCards = activePanel.querySelectorAll('.v-card');
 
   [...cards, ...catalogCards, ...vehicleCards].forEach(card => {
@@ -480,7 +481,7 @@ function filterCurrentTab(query) {
     card.style.display = text.includes(q) ? '' : 'none';
   });
   
-  
+  // Handle empty state if all filtered out
   const table = activePanel.querySelector('table');
   if (table) {
     const visibleRows = activePanel.querySelectorAll('tbody tr:not(.empty-row):not([style*="display: none"])');

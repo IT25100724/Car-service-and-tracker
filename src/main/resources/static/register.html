@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Create Account - CarService Tracker</title>
-<link href="https:
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Inter,sans-serif;background:#0d1b2a;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
@@ -69,6 +69,7 @@ body{font-family:Inter,sans-serif;background:#0d1b2a;min-height:100vh;display:fl
   <div class="card-title">Create Your Account</div>
   <div class="card-sub">Join CarService Tracker and manage your vehicles with ease</div>
 
+  <!-- NAME ROW -->
   <div class="form-row">
     <div class="field">
       <label>First Name <span style="color:#f87171">*</span></label>
@@ -80,19 +81,19 @@ body{font-family:Inter,sans-serif;background:#0d1b2a;min-height:100vh;display:fl
     </div>
   </div>
 
-  
+  <!-- EMAIL -->
   <div class="field">
     <label>Email Address <span style="color:#f87171">*</span></label>
     <div class="input-box"><input type="email" id="email" placeholder="user@email.com" autocomplete="email" oninput="clearErr('email')"></div>
   </div>
 
-  
+  <!-- PHONE -->
   <div class="field">
     <label>Phone Number <span style="color:#f87171">*</span></label>
     <div class="input-box"><input type="tel" id="phone" placeholder="07*-****-***" autocomplete="tel"></div>
   </div>
 
-  
+  <!-- ADDRESS -->
   <div class="field">
     <label>Address</label>
     <div class="input-box"><textarea id="address" placeholder="Enter your address"></textarea></div>
@@ -100,7 +101,7 @@ body{font-family:Inter,sans-serif;background:#0d1b2a;min-height:100vh;display:fl
 
   <div class="divider"><span>Security</span></div>
 
-  
+  <!-- PASSWORD -->
   <div class="field">
     <label>Password <span style="color:#f87171">*</span></label>
     <div class="input-box">
@@ -113,7 +114,7 @@ body{font-family:Inter,sans-serif;background:#0d1b2a;min-height:100vh;display:fl
     <div class="strength-txt" id="strength-txt"></div>
   </div>
 
-  
+  <!-- CONFIRM PASSWORD -->
   <div class="field">
     <label>Confirm Password <span style="color:#f87171">*</span></label>
     <div class="input-box">
@@ -124,7 +125,7 @@ body{font-family:Inter,sans-serif;background:#0d1b2a;min-height:100vh;display:fl
     </div>
   </div>
 
-  
+  <!-- TERMS -->
   <label class="terms">
     <input type="checkbox" id="terms">
     <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
@@ -134,7 +135,7 @@ body{font-family:Inter,sans-serif;background:#0d1b2a;min-height:100vh;display:fl
   <div class="login-link">Already have an account? <a href="index.html">Sign in here</a></div>
 </div>
 
-
+<!-- LOADING OVERLAY -->
 <div class="spinner-overlay" id="spinner">
   <div class="spinner"></div>
   <div class="spinner-txt">Creating your account...</div>

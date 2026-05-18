@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>CarService Tracker - Login</title>
-<link href="https:
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Inter,sans-serif;background:#0d1b2a;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
@@ -90,6 +90,7 @@ body{font-family:Inter,sans-serif;background:#0d1b2a;min-height:100vh;display:fl
     </button>
   </div>
 
+  <!-- SIGN IN PANEL -->
   <div class="panel active" id="panel-signin">
     <div class="card-title">Welcome Back</div>
     <div class="card-sub">Sign in to access your dashboard</div>
@@ -124,6 +125,7 @@ body{font-family:Inter,sans-serif;background:#0d1b2a;min-height:100vh;display:fl
     <div class="foot-note">Don't have an account? <a href="#" onclick="switchMode('register')">Register here</a></div>
   </div>
 
+  <!-- REGISTER PANEL -->
   <div class="panel" id="panel-register">
     <div class="card-title">Create Account</div>
     <div class="card-sub">Join CarService Tracker — it's free!</div>
@@ -216,7 +218,8 @@ function checkStr(v) {
   const l=lvl[Math.min(s-1,3)]||lvl[0]; fill.style.width=l.w; fill.style.background=l.c; txt.textContent=l.l; txt.style.color=l.c;
 }
 
-
+// ── REAL LOGIN ─────────────────────────────────────────
+async function signIn() {
   const em = document.getElementById('si-email').value.trim();
   const pw = document.getElementById('si-pwd').value;
   if(!em){toast('Please enter your email');return;}
@@ -235,8 +238,9 @@ function checkStr(v) {
     });
     const data = await res.json();
     if (res.ok) {
-      
+      // Store session
       sessionStorage.setItem('userId', data.userId);
+      sessionStorage.setItem('email', data.email);
       sessionStorage.setItem('username', data.username);
       sessionStorage.setItem('role', data.role);
       if (data.customerId) sessionStorage.setItem('customerId', data.customerId);
@@ -249,7 +253,7 @@ function checkStr(v) {
       btn.classList.add('shake');
       setTimeout(()=>btn.classList.remove('shake'), 400);
       btn.disabled = false;
-      setRole(role); 
+      setRole(role); // restore button text
     }
   } catch(e) {
     toast('Cannot connect to server. Please try again.');
@@ -260,8 +264,9 @@ function checkStr(v) {
   }
 }
 
-
+// ── REAL REGISTER ─────────────────────────────────────
 async function register() {
+  const fn=document.getElementById('r-fn').value.trim();
   const ln=document.getElementById('r-ln').value.trim();
   const un=document.getElementById('r-un').value.trim();
   const em=document.getElementById('r-em').value.trim();
@@ -289,9 +294,10 @@ async function register() {
     });
     if(res.ok) {
       const customer = await res.json();
-      
+      // Auto-login after register
       const loginRes = await fetch('/api/auth/login', {
         method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ email:em, password:pw, role:'customer' })
       });
       if(loginRes.ok) {
         const session = await loginRes.json();

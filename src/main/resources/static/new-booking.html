@@ -1,8 +1,8 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>New Booking - CarService Tracker</title>
-<link href="https:
-<link rel="stylesheet" href="https:
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 :root{--bg:#0a1321;--sb:#0f172a;--card:#1e2937;--inp:#1a2535;--teal:#14b8a6;--tdim:rgba(20,184,166,.10);--blue:#2563eb;--green:#34d399;--red:#f87171;--amb:#fbbf24;--tx:#e2e8f0;--tx2:#94a3b8;--mu:#475569;--bdr:rgba(255,255,255,.08);--r:16px;--rs:10px;--tr:.2s cubic-bezier(.4,0,.2,1);--sw:288px}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -157,7 +157,7 @@ button{font-family:inherit;cursor:pointer}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head><body>
-
+<!-- SIDEBAR -->
 <aside class="sb">
   <div class="sb-logo">
     <div class="ico"><i class="fas fa-car"></i></div>
@@ -175,9 +175,9 @@ button{font-family:inherit;cursor:pointer}
     <a href="index.html" class="nav-item" onclick="sessionStorage.clear()"><i class="fas fa-right-from-bracket"></i> Sign Out</a>
   </nav>
 </aside>
-
+<!-- MAIN -->
 <div class="main">
-  
+  <!-- TOPBAR -->
   <header class="topbar">
     <div class="search"><i class="fas fa-magnifying-glass"></i><input placeholder="Search..."></div>
     <div class="tb-right">
@@ -189,13 +189,13 @@ button{font-family:inherit;cursor:pointer}
       </div>
     </div>
   </header>
-  
+  <!-- PAGE CONTENT -->
   <div class="content">
     <div class="page-hdr">
       <a href="customer.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
       <div><h1>New Booking</h1><p>Schedule a car service appointment</p></div>
     </div>
-
+    <!-- STEPPER -->
     <div class="stepper" id="stepper">
       <div class="step" id="s1"><div class="step-circle" id="sc1">1</div><div class="step-info"><div class="step-num">STEP 1</div><div class="step-name">Vehicle</div></div></div>
       <div class="step-line" id="sl1"></div>
@@ -205,11 +205,11 @@ button{font-family:inherit;cursor:pointer}
       <div class="step-line" id="sl3"></div>
       <div class="step" id="s4"><div class="step-circle" id="sc4">4</div><div class="step-info"><div class="step-num">STEP 4</div><div class="step-name">Confirm</div></div></div>
     </div>
-
+    <!-- BOOKING GRID -->
     <div class="booking-grid">
-      
+      <!-- LEFT: STEP PANELS -->
       <div>
-        
+        <!-- STEP 1: VEHICLE -->
         <div class="step-panel active" id="panel1">
           <div class="panel-card">
             <div class="panel-title">Select Your Vehicle</div>
@@ -219,7 +219,7 @@ button{font-family:inherit;cursor:pointer}
           </div>
           <div class="nav-btns"><div></div><button class="btn btn-primary" onclick="next()">Next: Services <i class="fas fa-arrow-right" style="margin-left:6px"></i></button></div>
         </div>
-        
+        <!-- STEP 2: SERVICES -->
         <div class="step-panel" id="panel2">
           <div class="panel-card">
             <div class="panel-title">Select Services</div>
@@ -229,7 +229,7 @@ button{font-family:inherit;cursor:pointer}
           </div>
           <div class="nav-btns"><button class="btn btn-outline" onclick="prev()"><i class="fas fa-arrow-left" style="margin-right:6px"></i> Back</button><button class="btn btn-primary" onclick="next()">Next: Schedule <i class="fas fa-arrow-right" style="margin-left:6px"></i></button></div>
         </div>
-        
+        <!-- STEP 3: SCHEDULE -->
         <div class="step-panel" id="panel3">
           <div class="panel-card">
             <div class="panel-title">Choose Date & Time</div>
@@ -250,7 +250,7 @@ button{font-family:inherit;cursor:pointer}
           </div>
           <div class="nav-btns"><button class="btn btn-outline" onclick="prev()"><i class="fas fa-arrow-left" style="margin-right:6px"></i> Back</button><button class="btn btn-primary" onclick="next()">Next: Confirm <i class="fas fa-arrow-right" style="margin-left:6px"></i></button></div>
         </div>
-        
+        <!-- STEP 4: CONFIRM -->
         <div class="step-panel" id="panel4">
           <div class="panel-card">
             <div class="panel-title">Confirm Your Booking</div>
@@ -273,7 +273,7 @@ button{font-family:inherit;cursor:pointer}
           <div class="nav-btns"><button class="btn btn-outline" onclick="prev()"><i class="fas fa-arrow-left" style="margin-right:6px"></i> Back</button><button class="btn btn-primary" onclick="confirmBooking()"><i class="fas fa-check" style="margin-right:6px"></i> Confirm Booking</button></div>
         </div>
       </div>
-      
+      <!-- RIGHT: ORDER SUMMARY -->
       <div class="summary-card">
         <div class="sum-title"><i class="fas fa-receipt" style="color:var(--teal)"></i> Order Summary</div>
         <div id="summary-body"></div>
@@ -281,7 +281,7 @@ button{font-family:inherit;cursor:pointer}
     </div>
   </div>
 </div>
-
+<!-- SUCCESS OVERLAY -->
 <div class="overlay" id="overlay">
   <div class="success-box">
     <div class="suc-ico"><i class="fas fa-check"></i></div>
@@ -328,13 +328,13 @@ async function api(path) {
 document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('sch-date').min = new Date().toISOString().split('T')[0];
   
-  
+  // Set user profile
   const un = sessionStorage.getItem('username') || 'Customer';
   const inits = un.substring(0,2).toUpperCase();
   document.querySelector('.avatar').textContent = inits;
   document.querySelector('.user-name').textContent = un;
   
-  
+  // Load vehicles
   const vData = await api(`/api/vehicles/customer/${cid}`);
   if(vData) {
     vData.forEach(v => vehicles.push({
@@ -342,14 +342,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     }));
   }
   
-  
+  // Load services
   const sData = await api('/api/services');
   if(sData) {
     sData.forEach(s => services.push({
       id: s.id, name: s.serviceName, cat: s.category || 'Maintenance', icon: '🔧', dur: (s.durationMinutes+' min'), price: s.price || 0, color: '#10b981'
     }));
   } else {
-    
+    // Fallback if catalog not populated
     services.push(
       { id:1, name:'Full Service', cat:'Maintenance', icon:'🔧', dur:'3-4 hrs', price:8500, color:'#3b82f6' },
       { id:2, name:'Oil Change', cat:'Maintenance', icon:'🛢️', dur:'30 min', price:2500, color:'#10b981' }
@@ -458,7 +458,7 @@ function updateStepper() {
     sc.innerHTML = i<state.step ? '<i class="fas fa-check"></i>' : i;
     if(i<4) { const sl = document.getElementById('sl'+i); if(sl) sl.style.background = i<state.step?'var(--teal)':'var(--bdr)'; }
     
-    
+    // Update sidebar nav items
     const sbStep = document.getElementById('sb-step'+i);
     if(sbStep) sbStep.className = 'nav-item' + (i===state.step?' active':'');
   }
