@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @Getter
 @Setter
+// ABSTRACTION: An abstract class serves as a blueprint for common fields (id, createdAt) and cannot be instantiated directly.
 public abstract class BaseEntity {
 
-    // Encapsulation
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

@@ -1,9 +1,8 @@
 package com.example.car_service.user;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -12,34 +11,37 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class UserController {
 
-    // Encapsulation
+    // ABSTRACTION: Use the UserService to handle business logic, hiding the inner details.
     private final UserService userService;
 
-    // Polymorphism
+    // ENCAPSULATION: Receives a User object in the request body and passes it to the service to be saved.
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        User savedUser = userService.createUser(user);
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    public User createUser(@RequestBody User user) {
+        return userService.createUser(user);
     }
 
+    // ABSTRACTION: Handles GET requests to fetch a specific user by their ID.
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.getUserById(id));
+    public User getUserById(@PathVariable Long id) {
+        return userService.getUserById(id);
     }
 
+    // ABSTRACTION: Handles GET requests to retrieve a list of all users in the system.
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 
+    // ENCAPSULATION: Takes updated fields from the request body to modify an existing user account.
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
-        return ResponseEntity.ok(userService.updateUser(id, user));
+    public User updateUser(@PathVariable Long id, @RequestBody User user) {
+        return userService.updateUser(id, user);
     }
 
+    // ABSTRACTION: Handles DELETE requests to remove a user by their ID.
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+    public String deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return ResponseEntity.ok("User deleted successfully");
+        return "User deleted successfully";
     }
 }
