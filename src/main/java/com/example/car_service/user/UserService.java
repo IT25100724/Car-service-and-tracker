@@ -1,14 +1,58 @@
 package com.example.car_service.user;
 
+import com.example.car_service.exception.ResourceNotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import java.util.List;
 
-public interface UserService {
-    
-    User createUser(User user);
-    
-    User getUserById(Long id);
-    User getUserByUsername(String username);
-    List<User> getAllUsers();
-    User updateUser(Long id, User user);
-    void deleteUser(Long id);
+@Service
+@RequiredArgsConstructor
+public class UserService {
+
+    // Encapsulation
+    private final UserRepository userRepository;
+
+    public User createUser(User user) {
+        if (userRepository.existsByUsername(user.getUsername())) {
+            throw new RuntimeException("Username '" + user.getUsername() + "' is already taken.");
+        }
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new RuntimeException("Email '" + user.getEmail() + "' is already registered.");
+        }
+        return userRepository.save(user);
+    }
+
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
+    }
+
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + username));
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public User updateUser(Long id, User user) {
+        User existingUser = getUserById(id);
+
+        existingUser.setUsername(user.getUsername());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setRole(user.getRole());
+        existingUser.setIsActive(user.getIsActive());
+
+        if (user.getPasswordHash() != null && !user.getPasswordHash().isEmpty()) {
+            existingUser.setPasswordHash(user.getPasswordHash());
+        }
+
+        return userRepository.save(existingUser);
+    }
+
+    public void deleteUser(Long id) {
+        getUserById(id);
+        userRepository.deleteById(id);
+    }
 }

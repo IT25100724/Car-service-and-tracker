@@ -11,9 +11,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class UserController {
+
     // Encapsulation
     private final UserService userService;
 
+    // Polymorphism
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
         User savedUser = userService.createUser(user);

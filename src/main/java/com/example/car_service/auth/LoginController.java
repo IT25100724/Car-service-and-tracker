@@ -1,5 +1,6 @@
 package com.example.car_service.auth;
 
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,5 +32,13 @@ public class LoginController {
     @PostMapping("/seed-admin")
     public ResponseEntity<Map<String, Object>> seedAdmin(@RequestBody Map<String, String> body) {
         return ResponseEntity.ok(authService.seedAdmin(body));
+    }
+
+    // Login request DTO
+    @Data
+    public static class LoginRequest {
+        private String email;
+        private String password;
+        private String role;
     }
 }

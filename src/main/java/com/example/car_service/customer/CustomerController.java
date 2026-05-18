@@ -1,5 +1,6 @@
 package com.example.car_service.customer;
 
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/customers")
-// OOP Pillar: ENCAPSULATION - Lombok generates a constructor to set the private dependencies.
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class CustomerController {
@@ -18,8 +18,7 @@ public class CustomerController {
     // Encapsulation
     private final CustomerService customerService;
 
-    // polymorphism
-    @PostMapping
+    // Polymorphism
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
         return new ResponseEntity<>(customerService.createCustomer(customer), HttpStatus.CREATED);
     }
@@ -63,5 +62,32 @@ public class CustomerController {
     public ResponseEntity<String> deleteCustomer(@PathVariable Long id) {
         customerService.deleteCustomer(id);
         return ResponseEntity.ok("Customer deleted successfully");
+    }
+
+    // Customer profile DTO
+    @Data
+    public static class CustomerProfileDTO {
+        private String firstName;
+        private String lastName;
+        private String email;
+        private String phone;
+        private String address;
+        private String currentPassword;
+        private String newPassword;
+    }
+
+    // Customer registration DTO
+    @Data
+    public static class CustomerRegistrationDTO {
+        // User fields
+        private String username;
+        private String password;
+
+        // Customer profile fields
+        private String firstName;
+        private String lastName;
+        private String email;
+        private String phone;
+        private String address;
     }
 }

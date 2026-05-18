@@ -17,11 +17,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
-// Inheritance with BaseEntity Class
+// Inheritance
 public class User extends BaseEntity implements UserDetails {
 
-    // Encapsulation (This using private)
+    // Encapsulation
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
@@ -54,7 +53,7 @@ public class User extends BaseEntity implements UserDetails {
         updatedAt = LocalDateTime.now();
     }
 
-    // Polymorphism (Method Overriding)
+    // polymorphism
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
@@ -78,5 +77,11 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return isActive != null && isActive;
+    }
+
+    // User role enumeration
+    public enum UserRole {
+        ADMIN,
+        CUSTOMER
     }
 }
