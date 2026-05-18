@@ -15,9 +15,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthService {
 
-    // Encapsulation
+    // ABSTRACTION: Uses UserRepository to fetch user records from the database.
     private final UserRepository userRepository;
 
+    // ENCAPSULATION & ABSTRACTION: Verifies email, password, active status, and role matching before granting access.
     public Map<String, Object> login(LoginRequest req) {
         Optional<User> userOpt = userRepository.findByEmail(req.getEmail());
 
@@ -57,6 +58,7 @@ public class AuthService {
         return response;
     }
 
+    // ABSTRACTION: Checks if an admin exists, and if not, creates a default admin account.
     public Map<String, Object> seedAdmin(Map<String, String> body) {
         boolean adminExists = userRepository.findAll()
                 .stream()

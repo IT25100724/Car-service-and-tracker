@@ -2,8 +2,6 @@ package com.example.car_service.auth;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -14,27 +12,22 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class LoginController {
 
-    // Encapsulation
+    // ABSTRACTION: Delegates authentication logic to AuthService.
     private final AuthService authService;
 
-    // Polymorphism
+    // ENCAPSULATION & ABSTRACTION: Takes a LoginRequest DTO, verifies credentials via AuthService, and returns session data.
     @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequest req) {
-        try {
-            return ResponseEntity.ok(authService.login(req));
-        } catch (RuntimeException e) {
-            return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("message", e.getMessage()));
-        }
+    public Map<String, Object> login(@RequestBody LoginRequest req) {
+        return authService.login(req);
     }
 
+    // ABSTRACTION: Handles seeding a default admin account if none exists.
     @PostMapping("/seed-admin")
-    public ResponseEntity<Map<String, Object>> seedAdmin(@RequestBody Map<String, String> body) {
-        return ResponseEntity.ok(authService.seedAdmin(body));
+    public Map<String, Object> seedAdmin(@RequestBody Map<String, String> body) {
+        return authService.seedAdmin(body);
     }
 
-    // Login request DTO
+    // ENCAPSULATION: Bundles email, password, and requested role into one object for login verification.
     @Data
     public static class LoginRequest {
         private String email;
