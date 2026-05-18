@@ -17,11 +17,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomerService {
 
-    // Encapsulation
+    // ABSTRACTION: Relies on repository interfaces for database access.
     private final CustomerRepository customerRepository;
-
     private final UserRepository userRepository;
 
+    // ENCAPSULATION: Validates email uniqueness before saving a new customer profile.
     @Transactional
     public Customer createCustomer(Customer customer) {
         if (customerRepository.existsByEmail(customer.getEmail())) {
@@ -30,6 +30,7 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
+    // ENCAPSULATION & ABSTRACTION: Coordinates creating a Customer profile AND a linked User login account in one transaction.
     @Transactional
     public Customer registerCustomer(CustomerRegistrationDTO dto) {
         if (customerRepository.existsByEmail(dto.getEmail())) {
@@ -68,24 +69,28 @@ public class CustomerService {
         return customer;
     }
 
+    // ABSTRACTION: Fetches a customer by ID or throws a clean exception if not found.
     public Customer getCustomerById(Long id) {
         return customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
     }
 
+    // ABSTRACTION: Fetches a customer by email or throws a clean exception if not found.
     public Customer getCustomerByEmail(String email) {
         return customerRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found with email: " + email));
     }
 
+    // ABSTRACTION: Retrieves all customer profiles from the database.
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
     }
 
+    // ENCAPSULATION: Updates customer details and synchronizes the email change with the linked User account.
     @Transactional
     public Customer updateCustomer(Long id, Customer customer) {
         Customer existing = getCustomerById(id);
-        
+
         if (!existing.getEmail().equals(customer.getEmail()) && customerRepository.existsByEmail(customer.getEmail())) {
             throw new DuplicateResourceException("Email already in use: " + customer.getEmail());
         }
@@ -104,15 +109,15 @@ public class CustomerService {
         return customerRepository.save(existing);
     }
 
+    // ABSTRACTION: Deletes both the Customer profile and the linked User login account.
     @Transactional
     public void deleteCustomer(Long id) {
         getCustomerById(id);
-        
-        userRepository.findByCustomerId(id).ifPresent(user -> userRepository.delete(user));
-        
+        userRepository.findByCustomerId(id).ifPresent(userRepository::delete);
         customerRepository.deleteById(id);
     }
 
+    // ENCAPSULATION: Handles secure profile edits and verifies the current password before applying a new password.
     @Transactional
     public Customer updateProfile(Long id, CustomerProfileDTO dto) {
         Customer customer = getCustomerById(id);

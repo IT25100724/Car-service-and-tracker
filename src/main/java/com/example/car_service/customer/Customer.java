@@ -11,10 +11,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-// Inheritance
+// INHERITANCE: Customer extends BaseEntity to inherit the 'id' and 'createdAt' fields.
 public class Customer extends BaseEntity {
 
-    // Encapsulation :- private field, access controlled by getter/setter
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
@@ -29,5 +28,4 @@ public class Customer extends BaseEntity {
 
     @Column(name = "address")
     private String address;
-
 }
