@@ -2,12 +2,9 @@ package com.example.car_service.customer;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -15,56 +12,58 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class CustomerController {
 
-    // Encapsulation
     private final CustomerService customerService;
 
-    // Polymorphism
-    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
-        return new ResponseEntity<>(customerService.createCustomer(customer), HttpStatus.CREATED);
+    // ENCAPSULATION: Receives a Customer object from the frontend and passes it to the service layer.
+    @PostMapping
+    public Customer createCustomer(@RequestBody Customer customer) {
+        return customerService.createCustomer(customer);
     }
 
+    // ENCAPSULATION & ABSTRACTION: Takes a bundled registration DTO and creates both Customer and User accounts.
     @PostMapping("/register")
-    public ResponseEntity<Customer> registerCustomer(@RequestBody CustomerRegistrationDTO registrationDTO) {
-        return new ResponseEntity<>(customerService.registerCustomer(registrationDTO), HttpStatus.CREATED);
+    public Customer registerCustomer(@RequestBody CustomerRegistrationDTO registrationDTO) {
+        return customerService.registerCustomer(registrationDTO);
     }
 
+    // ABSTRACTION: Handles GET requests to fetch a customer profile by their ID.
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
-        return ResponseEntity.ok(customerService.getCustomerById(id));
+    public Customer getCustomerById(@PathVariable Long id) {
+        return customerService.getCustomerById(id);
     }
 
+    // ABSTRACTION: Handles GET requests to fetch a customer profile using their email address.
     @GetMapping("/email/{email}")
-    public ResponseEntity<Customer> getByEmail(@PathVariable String email) {
-        return ResponseEntity.ok(customerService.getCustomerByEmail(email));
+    public Customer getByEmail(@PathVariable String email) {
+        return customerService.getCustomerByEmail(email);
     }
 
+    // ABSTRACTION: Handles GET requests to list all customer profiles.
     @GetMapping
-    public ResponseEntity<List<Customer>> getAllCustomers() {
-        return ResponseEntity.ok(customerService.getAllCustomers());
+    public List<Customer> getAllCustomers() {
+        return customerService.getAllCustomers();
     }
 
+    // ENCAPSULATION: Takes updated fields from the request body to modify an existing customer profile.
     @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable Long id, @RequestBody Customer customer) {
-        return ResponseEntity.ok(customerService.updateCustomer(id, customer));
+    public Customer updateCustomer(@PathVariable Long id, @RequestBody Customer customer) {
+        return customerService.updateCustomer(id, customer);
     }
 
+    // ENCAPSULATION: Securely updates profile details and handles optional password changes via DTO.
     @PutMapping("/{id}/profile")
-    public ResponseEntity<?> updateProfile(@PathVariable Long id, @RequestBody CustomerProfileDTO dto) {
-        try {
-            Customer updated = customerService.updateProfile(id, dto);
-            return ResponseEntity.ok(updated);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", e.getMessage()));
-        }
+    public Customer updateProfile(@PathVariable Long id, @RequestBody CustomerProfileDTO dto) {
+        return customerService.updateProfile(id, dto);
     }
 
+    // ABSTRACTION: Handles DELETE requests to remove a customer profile by ID.
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCustomer(@PathVariable Long id) {
+    public String deleteCustomer(@PathVariable Long id) {
         customerService.deleteCustomer(id);
-        return ResponseEntity.ok("Customer deleted successfully");
+        return "Customer deleted successfully";
     }
 
-    // Customer profile DTO
+    // ENCAPSULATION: Bundles profile update fields and password verification into one secure object.
     @Data
     public static class CustomerProfileDTO {
         private String firstName;
@@ -76,14 +75,11 @@ public class CustomerController {
         private String newPassword;
     }
 
-    // Customer registration DTO
+    // ENCAPSULATION: Bundles all registration fields (User login info + Customer profile info) together.
     @Data
     public static class CustomerRegistrationDTO {
-        // User fields
         private String username;
         private String password;
-
-        // Customer profile fields
         private String firstName;
         private String lastName;
         private String email;
