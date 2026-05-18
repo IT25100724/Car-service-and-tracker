@@ -6,12 +6,12 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-// USing getters for Encapsulation
 @MappedSuperclass
 @Getter
 @Setter
 public abstract class BaseEntity {
 
+    // Encapsulation
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
