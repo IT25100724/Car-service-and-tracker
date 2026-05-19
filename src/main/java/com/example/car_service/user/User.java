@@ -1,53 +1,121 @@
 package com.example.car_service.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore; // Import JSON
+import jakarta.persistence.*; // Import JPA
 
 import java.time.LocalDateTime;
 
+// This class maps to a DB tables
+// Represents a registered user in the system (Admin or Customer)
 @Entity
 @Table(name = "users")
-@Data
-@EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-// INHERITANCE: User extends BaseEntity to inherit the 'id' and 'createdAt' fields.
+// Inheritance from BaseEntity
 public class User extends BaseEntity {
 
-    @Column(name = "username", nullable = false, unique = true)
+    // Encapsulation (Attribute as Private)
     private String username;
-
-    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @JsonIgnore
-    @Column(name = "password_hash", nullable = false)
+    @JsonIgnore  // Password for invisible to the frontend
     private String passwordHash;
 
+
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
     private UserRole role;
 
-    @Column(name = "customer_id")
     private Long customerId;
-
-    @Builder.Default
-    @Column(name = "is_active")
     private Boolean isActive = true;
-
-    @Column(name = "last_login")
     private LocalDateTime lastLogin;
-
-    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    // Auto-set the update date and time before database updates
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
 
+    // Default constructor for JPA
+    public User() {
+    }
+
+    // Parameterized constructor
+    public User(String username, String email, String passwordHash, UserRole role, Long customerId, Boolean isActive) {
+        this.username = username;
+        this.email = email;
+        this.passwordHash = passwordHash;
+        this.role = role;
+        this.customerId = customerId;
+        this.isActive = isActive;
+    }
+
+
+    // Encapsulation (below using getter/setter)
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public LocalDateTime getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(LocalDateTime lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    // Defines roles for access control
     public enum UserRole {
         ADMIN,
         CUSTOMER
