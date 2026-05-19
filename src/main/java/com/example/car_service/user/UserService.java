@@ -1,17 +1,20 @@
 package com.example.car_service.user;
 
 import com.example.car_service.exception.ResourceNotFoundException;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+// Service class for managing user all logic and CRUD operations
 @Service
-@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
 
-    // ENCAPSULATION & ABSTRACTION: Validates that username/email are unique before saving the new user.
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    // Create a user, checking for duplicate username and email first
     public User createUser(User user) {
         if (userRepository.existsByUsername(user.getUsername())) {
             throw new RuntimeException("Username '" + user.getUsername() + "' is already taken.");
@@ -22,24 +25,24 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    // ABSTRACTION: Fetches a user by ID or throws a clean exception if not found.
+    // Find a user by ID or not > exception if not found
     public User getUserById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     }
 
-    // ABSTRACTION: Fetches a user by username or throws a clean exception if not found.
+    // Find a user by username or not > exception if not found
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + username));
     }
 
-    // ABSTRACTION: Retrieves all user records from the database.
+    // Retrieve all users
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    // ENCAPSULATION: Modifies the existing user's internal fields and saves the updated state.
+    // Update user properties, including password if provided
     public User updateUser(Long id, User user) {
         User existingUser = getUserById(id);
 
@@ -55,7 +58,7 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
-    // ABSTRACTION: Ensures the user exists, then deletes them by ID.
+    // Delete a user by ID, checking existence first
     public void deleteUser(Long id) {
         getUserById(id);
         userRepository.deleteById(id);
