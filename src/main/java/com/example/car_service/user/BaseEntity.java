@@ -1,27 +1,45 @@
 package com.example.car_service.user;
 
+// Import JPA
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+// Parent class for entities, providing primary key and creation timestamp
 @MappedSuperclass
-@Getter
-@Setter
-// ABSTRACTION: An abstract class serves as a blueprint for common fields (id, createdAt) and cannot be instantiated directly.
+// Abstract class
 public abstract class BaseEntity {
 
+    // Primary Key
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto generate the primary key
     private Long id;
 
-    @Column(name = "created_at", updatable = false)
+
+
     private LocalDateTime createdAt;
 
+    // Auto create date and time when the saving user
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
+    }
+
+
+    // Encapsulation (Below using getter/setter)
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
