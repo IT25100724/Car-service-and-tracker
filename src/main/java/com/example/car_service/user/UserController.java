@@ -1,44 +1,49 @@
 package com.example.car_service.user;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.*;   // Import bringing in all Spring MVC annotations
 
-import java.util.List;
+import java.util.List; 
 
+// REST Controller for managing user accounts
 @RestController
 @RequestMapping("/api/users")
-@RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class UserController {
 
-    // ABSTRACTION: Use the UserService to handle business logic, hiding the inner details.
+    // Encapsulation (Attribute as Private)
     private final UserService userService;
 
-    // ENCAPSULATION: Receives a User object in the request body and passes it to the service to be saved.
+
+    // Constructor
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    // Create a new user account
     @PostMapping
     public User createUser(@RequestBody User user) {
         return userService.createUser(user);
     }
 
-    // ABSTRACTION: Handles GET requests to fetch a specific user by their ID.
+    // Retrieve user account by ID
     @GetMapping("/{id}")
     public User getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
-    // ABSTRACTION: Handles GET requests to retrieve a list of all users in the system.
+    // Retrieve all user accounts
     @GetMapping
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    // ENCAPSULATION: Takes updated fields from the request body to modify an existing user account.
+    // Update user account details
     @PutMapping("/{id}")
     public User updateUser(@PathVariable Long id, @RequestBody User user) {
         return userService.updateUser(id, user);
     }
 
-    // ABSTRACTION: Handles DELETE requests to remove a user by their ID.
+    // Delete a user account by ID
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
