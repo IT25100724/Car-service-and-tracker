@@ -24,7 +24,7 @@ public class Customer extends BaseEntity {
     }
 
 
-    // Parameterize Constructor (DTO)
+    // Parameterize Constructor
     public Customer(String firstName, String lastName, String email, String phone, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
